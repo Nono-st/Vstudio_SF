@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitar Turno | Victoria Studios</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+
+<div class="card">
+    <div class="logo-container">
+        <img src="Logo.png" alt="Victoria Studios Logo">
+    </div>
+    
+    <h2>Solicitar Turno</h2>
+    <p class="card-subtitle">Dejanos tus datos y nos contactaremos con vos.</p>
+
+    <div class="input-group">
+        <input type="text" id="nombre" placeholder=" " required>
+        <label>Nombre completo</label>
+    </div>
+
+    <div class="input-group">
+        <input type="tel" id="telefono" placeholder=" " required>
+        <label>Teléfono (WhatsApp)</label>
+    </div>
+
+    <div class="input-group">
+        <select id="servicio">
+            <option value="" disabled selected>Selecciona un servicio</option>
+            <option value="Manicura">Manicura</option>
+            <option value="Pedicura">Pedicura</option>
+            <option value="Tratamiento Facial">Tratamiento Facial</option>
+            <option value="Pestañas/Cejas">Pestañas o Cejas</option>
+            <option value="Otro">Otro servicio</option>
+        </select>
+    </div>
+
+    <button class="btn-premium" onclick="enviarTurno()">
+        ENVIAR SOLICITUD
+        <div class="shimmer"></div>
+    </button>
+    
+    <a href="index.html" class="back-link">← Volver al inicio</a>
+</div>
+
+<script>
+    function enviarTurno() {
+        const nombre = document.getElementById('nombre').value.trim();
+        const telefonoCliente = document.getElementById('telefono').value.trim();
+        const servicio = document.getElementById('servicio').value;
+
+        if (!nombre || !telefonoCliente || !servicio) {
+            alert('Por favor, completa todos los campos para enviarte la info por WhatsApp.');
+            return;
+        }
+
+        // --- CONFIGURACIÓN ---
+        const miTelefono = "5493425608788"; // <--- CAMBIÁ ESTO: Código de país (549) + Código de área (342) + Número sin el 15
+        
+        // Formateamos el mensaje para que quede profesional
+        const mensaje = "Hola Victoria Studios! ✨" + "\n" +
+                        "Quiero solicitar un turno desde la web:" + "\n\n" +
+                        "*Nombre:* " + nombre + "\n" +
+                        "*Servicio:* " + servicio + "\n" +
+                        "*Teléfono:* " + telefonoCliente;
+
+        // Codificamos el mensaje para la URL
+        const mensajeFinal = encodeURIComponent(mensaje);
+
+        // Creamos el enlace de WhatsApp
+        const wspLink = `https://wa.me/${miTelefono}?text=${mensajeFinal}`;
+
+        // Abrimos en una pestaña nueva
+        window.open(wspLink, '_blank');
+    }
+</script>
+</body>
+</html>
